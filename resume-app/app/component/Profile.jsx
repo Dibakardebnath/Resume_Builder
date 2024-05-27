@@ -1,39 +1,33 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { GetProfile } from '../Redux/Action';
+import Image from 'next/image';
 
 const Profile = () => {
   const [pictureUrl, setPictureUrl] = useState('');
   const [fullName, setFullName] = useState('');
-  const [headLine, setheadLine] = useState('');
+  const [headLine, setHeadLine] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [location, setLocation] = useState('');
 
-
-  const dispatch=useDispatch();
-  // const {Profile}=useSelector((store)=>store)
-
-  // console.log(Profile)
+  const dispatch = useDispatch();
 
   useEffect(() => {
-
     if (pictureUrl && fullName && email && phone && location) {
-    const profileData = {
-      pictureUrl,
-      fullName,
-      headLine,
-      email,
-      phone,
-      location,
-    };
-    // console.log('Profile Data:', profileData);
-    dispatch(GetProfile(profileData))
-  }
-    // Here you can store the profile data to a server or local storage as needed
-  }, [pictureUrl, fullName, email, phone, location]);
+      const profileData = {
+        pictureUrl,
+        fullName,
+        headLine,
+        email,
+        phone,
+        location,
+      };
+      dispatch(GetProfile(profileData));
+    }
+  }, [pictureUrl, fullName, headLine, email, phone, location, dispatch]);
 
   return (
     <div>
@@ -46,7 +40,7 @@ const Profile = () => {
 
       <div className="flex grid-row-1 gap-5 mb-2">
         <div className="rounded-full overflow-hidden h-20 w-20">
-          <img src={pictureUrl} alt="" className="h-full w-full object-cover" />
+          <Image src={pictureUrl} alt="" className="h-full w-full object-cover" />
         </div>
         <div className="w-full">
           <h1>Picture</h1>
@@ -70,13 +64,13 @@ const Profile = () => {
         className="w-full p-1 border mt-1 mb-1"
       />
 
-     <label htmlFor="fullName" className="mt-5">Headline</label>
+      <label htmlFor="headLine" className="mt-5">Headline</label>
       <input
         type="text"
         id="headLine"
         placeholder="Enter your text"
         value={headLine}
-        onChange={(e) => setheadLine(e.target.value)}
+        onChange={(e) => setHeadLine(e.target.value)}
         className="w-full p-1 border mt-1 mb-1"
       />
 
@@ -114,7 +108,7 @@ const Profile = () => {
           />
         </label>
       </div>
-      
+
       <hr className="mt-5 mb-5 border border-b-black" />
     </div>
   );

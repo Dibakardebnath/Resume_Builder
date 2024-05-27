@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import html2pdf from 'html2pdf.js';
 import { useSelector } from 'react-redux';
 import Link from "next/link";
+import Image from 'next/image';
 
 const Resume = () => {
   const {
@@ -50,7 +51,7 @@ const Resume = () => {
                 {Profile.headLine}
               </h2>
               {Profile.pictureUrl ? (
-                <img
+                <Image
                   className="border-none size-24 mt-3 mb-3"
                   src={Profile.pictureUrl}
                   alt=""
@@ -217,7 +218,7 @@ const Resume = () => {
                   <h1 className="font-bold">PROJECTS</h1>
                 </div>
                 {Project.map((ele, index) => (
-                  <div className="ml-8 mr-8">
+                  <div className="ml-8 mr-8" key={index}>
                     <Link className="font-semibold" href={ele.githubLink}>
                       {index + 1}. {ele.name}
                     </Link>
