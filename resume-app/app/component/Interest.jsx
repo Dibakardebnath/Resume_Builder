@@ -14,12 +14,12 @@ const Interest = () => {
 
   const openModal = () => {
     setIsModalOpen(true);
-    document.body.style.overflow = "hidden"; // Prevent scrolling behind modal
+    document.body.style.overflow = "hidden"; 
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    document.body.style.overflow = ""; // Allow scrolling again
+    document.body.style.overflow = ""; 
   };
 
   const handleModalClick = (e) => {
