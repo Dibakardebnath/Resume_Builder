@@ -1,8 +1,7 @@
 import React, { useRef } from 'react';
-import html2pdf from 'html2pdf.js';
+import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import Link from "next/link";
-import Image from 'next/image';
 
 const Resume = () => {
   const {
@@ -25,8 +24,9 @@ const Resume = () => {
 
   const resumeRef = useRef();
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     const element = resumeRef.current;
+    const html2pdf = (await import('html2pdf.js')).default; 
     const opt = {
       margin: 0,
       filename: 'resume.pdf',
@@ -36,9 +36,8 @@ const Resume = () => {
     };
     html2pdf().set(opt).from(element).save();
   };
-
   return (
-    <div className="col-span-2 bg-white-300 p-5 mt-20" ref={resumeRef}>
+    <div className="col-span-2 bg-white-300 p-5 mt-20">
       {Pro ? (
         <div className="border flex" ref={resumeRef}>
           <div className="flex-1 p-5 bg-[#d9e2e9]">
@@ -51,10 +50,10 @@ const Resume = () => {
                 {Profile.headLine}
               </h2>
               {Profile.pictureUrl ? (
-                <Image
+                <img
                   className="border-none size-24 mt-3 mb-3"
                   src={Profile.pictureUrl}
-                  alt=""
+                  alt="pictureUrl"
                 />
               ) : (
                 ""
@@ -82,8 +81,8 @@ const Resume = () => {
 
             {/* Education */}
             {Edu && (
-              <div className="mt-3 mb-3">
-                <div className="w-80 flex justify-center gap-3 m-auto bg-gray-100">
+              <div className="mt-3 mb-3 print:mt-0">
+                <div className="w-80 flex justify-center gap-3 m-auto bg-gray-100 print:mt-0">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -98,7 +97,7 @@ const Resume = () => {
                       d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"
                     />
                   </svg>
-                  <h1 className="font-bold">EDUCATION</h1>
+                  <h1 className="font-bold print:mt-0">EDUCATION</h1>
                 </div>
                 <div className="ml-8">
                   <h4 className="font-semibold mt-3">{Education.studyType}</h4>
@@ -192,7 +191,7 @@ const Resume = () => {
                   <h1 className="font-bold">SUMMERY</h1>
                 </div>
                 <div className="ml-8">
-                  <p className="mb-1 mt-1">{Summery}</p>
+                  <p className="mb-1 mt-1 w-80">{Summery}</p>
                 </div>
               </div>
             )}
@@ -218,7 +217,7 @@ const Resume = () => {
                   <h1 className="font-bold">PROJECTS</h1>
                 </div>
                 {Project.map((ele, index) => (
-                  <div className="ml-8 mr-8" key={index}>
+                  <div className="ml-8 w-80" key={index}>
                     <Link className="font-semibold" href={ele.githubLink}>
                       {index + 1}. {ele.name}
                     </Link>
@@ -229,7 +228,7 @@ const Resume = () => {
                     <p>{ele.description}</p>
 
                     <p className="font-semibold">Feature</p>
-                    <p>{ele.summary}</p>
+                    <p className='w-80'>{ele.summary}</p>
                   </div>
                 ))}
               </div>

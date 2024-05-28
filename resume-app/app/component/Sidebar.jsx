@@ -9,7 +9,7 @@ import Projects from './Projects'
 
 const Sidebar = () => {
   return (
-    <div  className="p-4 col-span-1  border-gray-100  bg-#f8f8f9-200">
+    <div  className="p-4 col-span-1 shadow-lg  border-gray-500  bg-#f8f8f9-200">
      <Profile/>
      <Summery/>
      <Education/>

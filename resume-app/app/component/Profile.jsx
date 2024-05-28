@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { GetProfile } from '../Redux/Action';
-import Image from 'next/image';
 
 const Profile = () => {
   const [pictureUrl, setPictureUrl] = useState('');
@@ -16,7 +15,7 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (pictureUrl && fullName && email && phone && location) {
+    if (typeof window !== 'undefined' && pictureUrl && fullName && email && phone && location) {
       const profileData = {
         pictureUrl,
         fullName,
@@ -29,6 +28,10 @@ const Profile = () => {
     }
   }, [pictureUrl, fullName, headLine, email, phone, location, dispatch]);
 
+  const handleImageError = () => {
+    setPictureUrl('');
+  };
+
   return (
     <div>
       <div className="flex items-center gap-5 mb-5 mt-20 ">
@@ -39,9 +42,16 @@ const Profile = () => {
       </div>
 
       <div className="flex grid-row-1 gap-5 mb-2">
-        <div className="rounded-full overflow-hidden h-20 w-20">
-          <Image src={pictureUrl} alt="" className="h-full w-full object-cover" />
-        </div>
+        {pictureUrl && (
+          <div className="rounded-full overflow-hidden h-20 w-20">
+            <img
+              src={pictureUrl}
+              alt="Profile picture"
+              onError={handleImageError}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        )}
         <div className="w-full">
           <h1>Picture</h1>
           <input
